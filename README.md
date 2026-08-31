@@ -262,8 +262,8 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 - **Issues**: [GitHub Issues](https://github.com/Snehishere/D-DAS/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/Snehishere/D-DAS/discussions)
-- **Email**: snehishere@example.com
+- **Email**: snehent2006@gmail.com
 
 ---
 
-**Built with ❤️ for space situational awareness**
+**Built with ❤️**
