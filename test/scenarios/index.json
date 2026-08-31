@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "01_critical",
+    "expected": "CRITICAL",
+    "note": "Two co-planar LEO bodies, ~1.5° phase offset produces a closest approach of ~180 km.",
+    "satellite": {
+      "objectId": "25544",
+      "kind": "Satellite",
+      "massKg": 419725,
+      "label": "ISS-like",
+      "format": "tle"
+    },
+    "debris": {
+      "objectId": "DEB-9001",
+      "kind": "Debris",
+      "massKg": 8,
+      "label": "Debris-A",
+      "format": "csv"
+    },
+    "computed": {
+      "closestApproachKm": 177.716304826773,
+      "timeToClosestApproachSec": 9465.1375,
+      "relativeSpeedKms": 0.1998784532111038
+    }
+  },
+  {
+    "slug": "02_warning",
+    "expected": "WARNING",
+    "note": "LEO satellite and a debris fragment on the same orbit with ~3.5° phase offset.",
+    "satellite": {
+      "objectId": "STAR-1234",
+      "kind": "Satellite",
+      "massKg": 260,
+      "label": "Starlink-shell-1",
+      "format": "tle"
+    },
+    "debris": {
+      "objectId": "DEB-4411",
+      "kind": "Debris",
+      "massKg": 2,
+      "label": "Fragment-B",
+      "format": "csv"
+    },
+    "computed": {
+      "closestApproachKm": 422.55887329148214,
+      "timeToClosestApproachSec": 9764.875,
+      "relativeSpeedKms": 0.46190663024033735
+    }
+  },
+  {
+    "slug": "03_nominal",
+    "expected": "Nominal",
+    "note": "LEO satellite and a debris fragment 1000 km apart in altitude with very different inclination.",
+    "satellite": {
+      "objectId": "25544",
+      "kind": "Satellite",
+      "massKg": 419725,
+      "label": "SafeSat",
+      "format": "tle"
+    },
+    "debris": {
+      "objectId": "DEB-2210",
+      "kind": "Debris",
+      "massKg": 3,
+      "label": "Polar-Fragment",
+      "format": "csv"
+    },
+    "computed": {
+      "closestApproachKm": 1380.6426615327027,
+      "timeToClosestApproachSec": 9177.6125,
+      "relativeSpeedKms": 5.080316766414583
+    }
+  },
+  {
+    "slug": "04_geo_vs_leo",
+    "expected": "Nominal",
+    "note": "A geostationary satellite and a high-inclination LEO debris fragment.",
+    "satellite": {
+      "objectId": "GEO-19",
+      "kind": "Satellite",
+      "massKg": 2200,
+      "label": "GeoSat-19",
+      "format": "tle"
+    },
+    "debris": {
+      "objectId": "DEB-7702",
+      "kind": "Debris",
+      "massKg": 12,
+      "label": "High-Inc-Debris",
+      "format": "csv"
+    },
+    "computed": {
+      "closestApproachKm": 35364.40266874932,
+      "timeToClosestApproachSec": 137640.6,
+      "relativeSpeedKms": 6.909021516392728
+    }
+  },
+  {
+    "slug": "05_headon",
+    "expected": "CRITICAL",
+    "note": "Polar satellite and a retrograde debris fragment (inclination >90°): head-on crossing.",
+    "satellite": {
+      "objectId": "POLR-A",
+      "kind": "Satellite",
+      "massKg": 850,
+      "label": "PolarSat-A",
+      "format": "tle"
+    },
+    "debris": {
+      "objectId": "DEB-RETRO",
+      "kind": "Debris",
+      "massKg": 4,
+      "label": "Retrograde-Fragment",
+      "format": "csv"
+    },
+    "computed": {
+      "closestApproachKm": 1.6162570113094488,
+      "timeToClosestApproachSec": 8713.95,
+      "relativeSpeedKms": 5.163865889656722
+    }
+  }
+]

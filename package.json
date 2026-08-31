@@ -1,0 +1,31 @@
+{
+  "name": "d-das",
+  "version": "1.0.0",
+  "description": "Local space debris and asteroid detection application with 3D orbital simulation",
+  "main": "main.js",
+  "author": "D-DAS Team",
+  "license": "MIT",
+  "homepage": "https://example.com/d-das",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "keywords": [
+    "space",
+    "debris",
+    "asteroid",
+    "orbit",
+    "tle",
+    "threejs",
+    "electron"
+  ],
+  "dependencies": {
+    "electron": "^31.0.0",
+    "pngjs": "^7.0.0",
+    "satellite.js": "^7.1.0",
+    "three": "^0.166.1"
+  },
+  "devDependencies": {
+    "jpeg-js": "^0.4.4"
+  }
+}

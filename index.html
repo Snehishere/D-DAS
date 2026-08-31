@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' file: data: blob:; script-src 'self' file: 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data: blob:; connect-src 'self' file: ws:;" />
+  <title>D-DAS</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app-root">
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-mark" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="5" stroke="#4cc2ff" stroke-width="1.5" />
+            <ellipse cx="14" cy="14" rx="12" ry="4.5" stroke="#4cc2ff" stroke-width="1" transform="rotate(-20 14 14)" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">D-DAS</span>
+          <span class="brand-subtitle">Space Debris &amp; Asteroid Detection</span>
+        </div>
+      </div>
+
+      <div class="section-label">Data Sources</div>
+      <div id="file-controls" class="file-controls">
+        <button id="btn-load-image" class="fluent-button picker" type="button">
+          <span class="btn-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="btn-label">
+            <span class="btn-title">Load Image</span>
+            <span class="btn-desc">PNG / JPG frame</span>
+          </span>
+        </button>
+
+        <button id="btn-load-csv" class="fluent-button picker" type="button">
+          <span class="btn-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="btn-label">
+            <span class="btn-title">Load CSV Telemetry</span>
+            <span class="btn-desc">Time, X, Y, Z orbit log</span>
+          </span>
+        </button>
+
+        <button id="btn-load-tle" class="fluent-button picker" type="button">
+          <span class="btn-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M12 2l1.8 4.2M12 22l-1.8-4.2M2 12l4.2 1.8M22 12l-4.2-1.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="btn-label">
+            <span class="btn-title">Load TLE Orbit</span>
+            <span class="btn-desc">Two-Line Element set</span>
+          </span>
+        </button>
+      </div>
+
+      <div class="section-label">Session Log</div>
+      <div id="log-view" class="log-view" aria-live="polite">
+        <div class="log-empty">No activity recorded yet</div>
+      </div>
+
+      <div class="section-label">System</div>
+      <div id="system-info" class="system-info">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-text">Initializing&#8230;</span>
+      </div>
+    </aside>
+
+    <main id="main-panel">
+      <div class="main-header">
+        <div id="tab-strip" class="tab-strip" role="tablist">
+          <button id="tab-image" class="tab-button active" type="button" role="tab" aria-selected="true">
+            Image Processing
+          </button>
+          <button id="tab-sim" class="tab-button" type="button" role="tab" aria-selected="false">
+            3D Orbital Simulation
+          </button>
+        </div>
+        <div class="header-actions">
+          <span id="selected-file-label" class="selected-file-label">No files loaded</span>
+          <button id="btn-save-log" class="fluent-button compact" type="button">Export Log</button>
+        </div>
+      </div>
+
+      <div id="view-image" class="view-pane active" role="tabpanel">
+        <div id="canvas-container" class="canvas-container">
+          <div id="canvas-stage" class="canvas-stage">
+            <canvas id="image-canvas"></canvas>
+            <canvas id="overlay-canvas"></canvas>
+          </div>
+          <div id="detection-overlay" class="detection-overlay">
+            <div id="detection-card" class="detection-card hidden">
+              <div class="card-title">Target Locked</div>
+              <div class="card-row"><span class="card-key">Objects</span><span class="card-value" id="card-count">0</span></div>
+              <div class="card-row"><span class="card-key">Primary</span><span class="card-value" id="card-class">Space Debris</span></div>
+              <div class="card-row"><span class="card-key">Confidence</span><span class="card-value" id="card-confidence">96.4%</span></div>
+              <div class="card-row"><span class="card-key">BBox</span><span class="card-value" id="card-bbox">—</span></div>
+              <div class="card-row"><span class="card-key">Local X</span><span class="card-value" id="card-x">0</span></div>
+              <div class="card-row"><span class="card-key">Local Y</span><span class="card-value" id="card-y">0</span></div>
+            </div>
+          </div>
+        </div>
+        <div id="image-empty" class="panel-empty">
+          <div class="empty-icon" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.2"/>
+              <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="empty-title">No Image Loaded</div>
+          <div class="empty-desc">Load an orbital frame to run the local object detection simulation.</div>
+        </div>
+      </div>
+
+      <div id="view-sim" class="view-pane" role="tabpanel">
+        <div id="three-container" class="three-container">
+          <div id="status-overlay" class="status-overlay">
+            <div id="sim-info" class="sim-info">
+              <div class="sim-title">Active Orbital Body</div>
+              <div class="sim-row"><span class="sim-key">Name</span><span class="sim-value" id="sim-name">&#8212;</span></div>
+              <div class="sim-row"><span class="sim-key">Inclination</span><span class="sim-value" id="sim-inclination">&#8212;</span></div>
+              <div class="sim-row"><span class="sim-key">Eccentricity</span><span class="sim-value" id="sim-eccentricity">&#8212;</span></div>
+              <div class="sim-row"><span class="sim-key">RAAN</span><span class="sim-value" id="sim-raan">&#8212;</span></div>
+              <div class="sim-row"><span class="sim-key">Arg. Perigee</span><span class="sim-value" id="sim-argperigee">&#8212;</span></div>
+              <div class="sim-row"><span class="sim-key">Impact Time</span><span class="sim-value" id="sim-impact">&#8212;</span></div>
+            </div>
+            <div id="body-list" class="body-list" aria-label="Tracked bodies"></div>
+          </div>
+        </div>
+        <div id="sim-empty" class="panel-empty">
+          <div class="empty-icon" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M12 2l1.8 4.2M12 22l-1.8-4.2M2 12l4.2 1.8M22 12l-4.2-1.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="empty-title">No Trajectory Loaded</div>
+          <div class="empty-desc">Load a TLE or CSV file, or view the automatically loaded example trajectory.</div>
+        </div>
+      </div>
+
+      <div id="status-bar" class="status-bar">
+        <span id="engine-status">Engine: ready</span>
+        <span id="load-status" class="load-status">Awaiting data&#8230;</span>
+      </div>
+    </main>
+  </div>
+
+  <script type="importmap">
+    { "imports": { "three": "./node_modules/three/build/three.module.js", "satellite.js": "./node_modules/satellite.js/dist/index.js" } }
+  </script>
+  <script type="module" src="renderer.js"></script>
+</body>
+</html>
