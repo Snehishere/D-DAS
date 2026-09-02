@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron');
+import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('ddasAPI', {
   openImage: () => ipcRenderer.invoke('dialog:openImage'),
@@ -6,5 +6,5 @@ contextBridge.exposeInMainWorld('ddasAPI', {
   openTle: () => ipcRenderer.invoke('dialog:openTle'),
   saveLog: (content) => ipcRenderer.invoke('fs:saveLog', content),
   getInfo: () => ipcRenderer.invoke('app:getInfo'),
-  getTexturePaths: () => ipcRenderer.invoke('app:getTexturePaths')
+  getTexturePaths: () => ipcRenderer.invoke('app:getTexturePaths'),
 });

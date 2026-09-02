@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "Local space debris and asteroid detection application with 3D orbital simulation",
   "main": "main.js",
+  "type": "module",
   "author": "D-DAS Team",
   "license": "MIT",
   "homepage": "https://example.com/d-das",
   "scripts": {
     "start": "electron .",
-    "dev": "electron . --dev"
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write ."
   },
   "keywords": [
     "space",
@@ -26,6 +30,8 @@
     "three": "^0.166.1"
   },
   "devDependencies": {
-    "jpeg-js": "^0.4.4"
+    "@eslint/js": "^10.0.1",
+    "electron-builder": "^24.13.3",
+    "globals": "^17.12.0"
   }
 }

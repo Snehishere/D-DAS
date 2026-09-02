@@ -1,4 +1,4 @@
-# D-DAS: Debris Detection & Avoidance Simulation
+# D-DAS: Debris Detection & Asteroid Simulation
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Electron](https://img.shields.io/badge/Electron-31.x-blue.svg)](https://www.electronjs.org/)
@@ -262,8 +262,8 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 - **Issues**: [GitHub Issues](https://github.com/Snehishere/D-DAS/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/Snehishere/D-DAS/discussions)
-- **Email**: snehent2006@gmail.com
+- **Email**: snehishere@example.com
 
 ---
 
-**Built with ❤️**
+**Built with ❤️ for space situational awareness**

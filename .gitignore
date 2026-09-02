@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.exe
+*.dmg
+*.AppImage
+*.deb
+*.rpm
+
+# Electron
+*.log
+npm-debug.log*
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# App data
+*.local
+*.cache
+
+# Test artifacts
+test/generated/
+test/*.png
+
+# Environment
+.env
+.env.local
+
+# Texture cache (user data)
+# Not committed - generated at runtime
