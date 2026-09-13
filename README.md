@@ -262,7 +262,7 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 - **Issues**: [GitHub Issues](https://github.com/Snehishere/D-DAS/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/Snehishere/D-DAS/discussions)
-- **Email**: snehishere@example.com
+- 
 
 ---
 
